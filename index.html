@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Pluma — The copilot Windows never gave you</title>
+  <meta name="description" content="Your ghost writer, autonomous agent, and AI companion — always one keystroke away."/>
+  <link rel="stylesheet" href="style.css"/>
+  <style>
+    .hero {
+      min-height: calc(100vh - 62px);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center; padding: 80px 40px;
+      position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 70% 45% at 50% 0%, rgba(255,255,255,0.045) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 11px; color: var(--faint); letter-spacing: 0.06em;
+      background: rgba(255,255,255,0.04); border: 1px solid var(--border);
+      border-radius: 20px; padding: 5px 14px; margin-bottom: 36px;
+    }
+    .pulse { width: 6px; height: 6px; border-radius: 50%; background: rgba(255,255,255,0.35); display: inline-block; animation: pulse 2s ease infinite; }
+    @keyframes pulse { 0%,100%{opacity:0.35} 50%{opacity:0.85} }
+    .hero h1 { max-width: 780px; margin-bottom: 24px; }
+    .hero h1 em { font-style: normal; color: var(--dim); }
+    .hero-sub { font-size: 18px; color: var(--dim); max-width: 480px; margin-bottom: 44px; line-height: 1.65; }
+    .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+    .shortcut-hint { margin-top: 60px; display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--faint); }
+
+    .demo-wrap { width: 100%; max-width: 640px; margin: 72px auto 0; }
+    .demo-window {
+      background: rgba(14,14,16,0.92); border: 1px solid var(--border);
+      border-radius: 16px; overflow: hidden;
+      box-shadow: 0 40px 100px rgba(0,0,0,0.7), 0 0 0 0.5px rgba(255,255,255,0.04) inset;
+      animation: fade-up 0.6s ease 0.35s both;
+    }
+    .demo-bar {
+      display: flex; align-items: center; gap: 12px;
+      padding: 0 18px; height: 62px;
+      border-bottom: 1px solid rgba(255,255,255,0.055);
+    }
+    .demo-bar-logo { width: 18px; height: 18px; opacity: 0.35; flex-shrink: 0; }
+    .demo-input-text { font-size: 16px; color: var(--text); font-family: var(--font); font-weight: 400; }
+    .demo-cur { display: inline-block; width: 2px; height: 17px; background: var(--dim); vertical-align: middle; margin-left: 1px; animation: blink 0.9s step-end infinite; }
+    @keyframes blink { 50% { opacity: 0; } }
+    .demo-body { padding: 14px 18px 20px; }
+    .demo-role { font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--faint); margin-bottom: 5px; }
+    .demo-msg { font-size: 13px; line-height: 1.65; color: rgba(255,255,255,0.65); background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 10px; padding: 10px 14px; max-width: 90%; }
+
+    .feat-section { padding: 120px 0 80px; }
+    .feat-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; margin-top: 56px; }
+    @media(max-width:720px){ .feat-grid { grid-template-columns: 1fr; } }
+    .feat-item { background: var(--bg); padding: 30px 26px; transition: background 0.15s; }
+    .feat-item:hover { background: rgba(255,255,255,0.02); }
+    .feat-glyph { font-size: 20px; margin-bottom: 14px; opacity: 0.7; }
+    .feat-item h3 { font-size: 15px; margin-bottom: 7px; }
+    .feat-item p { font-size: 13.5px; }
+
+    .cta-band { padding: 100px 0; text-align: center; }
+    .cta-band h2 { margin-bottom: 12px; }
+    .cta-band p { margin-bottom: 36px; }
+  </style>
+</head>
+<body>
+<nav class="nav">
+  <a href="index.html" class="nav-logo">
+    <svg viewBox="0 0 512 512" fill="currentColor"><path d="M467.14 44.84c-62.55-62.48-161.67-64.78-252.28 25.73-78.61 78.52-60.98 60.92-85.75 85.66-60.46 60.39-70.39 150.83-63.64 211.17l178.44-178.25c6.26-6.25 16.4-6.25 22.65 0s6.25 16.38 0 22.63L7.04 471.03c-9.38 9.37-9.38 24.57 0 33.94 9.38 9.37 24.6 9.37 33.98 0l66.1-66.03C159.42 454.65 279 457.11 353.95 384h-98.19l147.57-49.14c49.99-49.93 36.38-36.18 46.31-46.86h-97.78l131.54-43.8c45.44-74.46 34.31-148.84-16.26-199.36z"/></svg>
+    Pluma
+  </a>
+  <div class="nav-links">
+    <a href="features.html">Features</a>
+    <a href="docs.html">Docs</a>
+    <a href="about.html">About</a>
+    <a href="https://github.com/aaravriyer193/pluma" target="_blank" rel="noopener" class="nav-github" aria-label="GitHub">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.009-.868-.013-1.703-2.782.605-3.369-1.34-3.369-1.34-.454-1.154-1.11-1.461-1.11-1.461-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.831.092-.646.35-1.086.636-1.336-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0 1 12 6.836a9.59 9.59 0 0 1 2.504.337c1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
+    </a>
+    <a href="download.html" class="nav-cta">Download</a>
+  </div>
+</nav>
+
+<div class="page">
+  <section class="hero">
+    <div class="hero-badge"><span class="pulse"></span> Free · Windows · Open Source</div>
+    <h1 class="fade-up">The copilot<br/><em>Windows never gave you.</em></h1>
+    <p class="hero-sub fade-up fade-up-1">Ghost-writes. Clicks. Browses. Remembers. Runs commands. All from one key — invisible until you need it.</p>
+    <div class="hero-actions fade-up fade-up-2">
+      <a href="download.html" class="btn btn-primary">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 16l-6-6h4V4h4v6h4l-6 6zm-8 4h16v-2H4v2z"/></svg>
+        Download for Windows
+      </a>
+      <a href="features.html" class="btn btn-ghost">See what it does →</a>
+    </div>
+    <div class="shortcut-hint fade-up fade-up-3"><kbd>Alt</kbd> <span>+</span> <kbd>P</kbd> <span>· summon from anywhere</span></div>
+
+    <div class="demo-wrap">
+      <div class="demo-window">
+        <div class="demo-bar">
+          <svg class="demo-bar-logo" viewBox="0 0 512 512" fill="rgba(255,255,255,0.4)"><path d="M467.14 44.84c-62.55-62.48-161.67-64.78-252.28 25.73-78.61 78.52-60.98 60.92-85.75 85.66-60.46 60.39-70.39 150.83-63.64 211.17l178.44-178.25c6.26-6.25 16.4-6.25 22.65 0s6.25 16.38 0 22.63L7.04 471.03c-9.38 9.37-9.38 24.57 0 33.94 9.38 9.37 24.6 9.37 33.98 0l66.1-66.03C159.42 454.65 279 457.11 353.95 384h-98.19l147.57-49.14c49.99-49.93 36.38-36.18 46.31-46.86h-97.78l131.54-43.8c45.44-74.46 34.31-148.84-16.26-199.36z"/></svg>
+          <span class="demo-input-text" id="demo-text"></span><span class="demo-cur"></span>
+        </div>
+        <div class="demo-body" id="demo-body" style="display:none">
+          <div class="demo-role">pluma</div>
+          <div class="demo-msg" id="demo-msg"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="feat-section">
+    <div class="container">
+      <div style="text-align:center"><span class="eyebrow">Built different</span><h2>Everything, one keystroke.</h2></div>
+      <div class="feat-grid">
+        <div class="feat-item"><div class="feat-glyph">✦</div><h3>Ghost Writer</h3><p>Rewrite, polish, summarise, translate clipboard content. /polite /tldr /doc and more.</p></div>
+        <div class="feat-item"><div class="feat-glyph">◎</div><h3>Computer Use</h3><p>Sees your screen, moves the cursor, clicks, types. Opens Chrome. Actually does the task.</p></div>
+        <div class="feat-item"><div class="feat-glyph">◈</div><h3>RAG Memory</h3><p>Remembers every session. Searches past context with full-text matching. No cloud sync.</p></div>
+        <div class="feat-item"><div class="feat-glyph">⟁</div><h3>Terminal Agent</h3><p>Run PowerShell, read files, list directories, write scripts — all in plain English.</p></div>
+        <div class="feat-item"><div class="feat-glyph">⊡</div><h3>Overlay UI</h3><p>Transparent, always-on-top, zero chrome. Lives in Alt+P. Vanishes when you look away.</p></div>
+        <div class="feat-item"><div class="feat-glyph">≋</div><h3>Slash Commands</h3><p>/bash /regex /explain /translate /doc — instant transforms without context switching.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-band">
+    <div class="container-sm" style="text-align:center">
+      <span class="eyebrow">Free forever</span>
+      <h2>Press Alt+P. The rest is Pluma.</h2>
+      <p>No subscription. No cloud account. Runs locally on your machine.</p>
+      <a href="download.html" class="btn btn-primary">Download free →</a>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;width:100%">
+      <span class="footer-logo">Pluma</span>
+      <nav class="footer-links">
+        <a href="features.html">Features</a>
+        <a href="docs.html">Docs</a>
+        <a href="about.html">About</a>
+        <a href="download.html">Download</a>
+        <a href="https://github.com/aaravriyer193/pluma" target="_blank" rel="noopener">GitHub ↗</a>
+      </nav>
+    </div>
+  </footer>
+</div>
+
+<script>
+const demos = [
+  {i:"make this email sound more professional", r:"Done — rewrote it, tightened the tone. Copied to clipboard."},
+  {i:"open youtube and search for lo-fi beats", r:"Opening Chrome, searching YouTube for lo-fi beats now…"},
+  {i:"/tldr", r:"• Revenue up 12% QoQ\n• Supply chain risk flagged for Q4\n• Board approval deadline: Friday"},
+  {i:"find my project proposal in Downloads and open it", r:"Found Project_Proposal_v3.docx in Downloads — opening."},
+];
+let di=0,ci=0;
+const te=document.getElementById('demo-text'), be=document.getElementById('demo-body'), me=document.getElementById('demo-msg');
+function go(){
+  const d=demos[di%demos.length]; be.style.display='none';
+  if(ci<d.i.length){te.textContent=d.i.slice(0,++ci);setTimeout(go,44+Math.random()*28);}
+  else{setTimeout(()=>{te.textContent='';be.style.display='block';me.textContent=d.r;ci=0;di++;setTimeout(go,3400);},550);}
+}
+setTimeout(go,900);
+</script>
+</body>
+</html>
